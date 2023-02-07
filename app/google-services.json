@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "344073185303",
+    "project_id": "lrnshub",
+    "storage_bucket": "lrnshub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344073185303:android:95ecbdf9d5258c6ac69452",
+        "android_client_info": {
+          "package_name": "com.project.lrnshub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344073185303-misqp8n1clo8nj4hstr2thl1vnfuk4vc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYcFlaiOVe9t908CYALVPtiiDX-3jyG5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "344073185303-misqp8n1clo8nj4hstr2thl1vnfuk4vc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

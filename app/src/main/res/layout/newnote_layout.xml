@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <!-- Checkbox -->
+
+    <TextView
+        android:id="@+id/move"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="visible"
+        android:drawablePadding="6dp"
+        android:background="@drawable/ic_move"
+        app:drawableStartCompat="@drawable/ic_move" />
+
+    <CheckBox
+        android:id="@+id/check"
+        android:layout_width="40dp"
+        android:buttonTint="@color/primary"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/move" />
+    <!-- Text -->
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/cross"
+        android:layout_toEndOf="@id/check"
+        android:background="@null"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/cross"
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="invisible"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/cross" />
+</RelativeLayout>

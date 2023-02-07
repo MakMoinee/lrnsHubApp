@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/ic_baseline_note"
+        android:title="Todo" />
+
+    <item
+        android:id="@+id/navigation_focus"
+        android:icon="@drawable/logo"
+        android:title="Focus Mode" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/homepage"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/navigation_account"
+        android:icon="@drawable/account"
+        android:title="Account" />
+
+</menu>
