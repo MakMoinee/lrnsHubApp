@@ -1,33 +1,42 @@
 {
   "project_info": {
-    "project_number": "344073185303",
-    "project_id": "lrnshub",
-    "storage_bucket": "lrnshub.appspot.com"
+    "project_number": "421516903141",
+    "firebase_url": "https://lrnhshub-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "lrnhshub",
+    "storage_bucket": "lrnhshub.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:344073185303:android:95ecbdf9d5258c6ac69452",
+        "mobilesdk_app_id": "1:421516903141:android:b4e7f1afd53df7e52f8a0c",
         "android_client_info": {
           "package_name": "com.project.lrnshub"
         }
       },
       "oauth_client": [
         {
-          "client_id": "344073185303-misqp8n1clo8nj4hstr2thl1vnfuk4vc.apps.googleusercontent.com",
+          "client_id": "421516903141-elr180esetimn62e1v0oat5ko62g7ogs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.lrnshub",
+            "certificate_hash": "0dd4a7bb7541f9a586cb1e370294daf46f90f4a6"
+          }
+        },
+        {
+          "client_id": "421516903141-61jv6fed9fi10ic4ni4g35euvg0hf4qn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBYcFlaiOVe9t908CYALVPtiiDX-3jyG5Q"
+          "current_key": "AIzaSyACepwhQgmPUSAvFIy-at4T1iQf6SQVe28"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "344073185303-misqp8n1clo8nj4hstr2thl1vnfuk4vc.apps.googleusercontent.com",
+              "client_id": "421516903141-61jv6fed9fi10ic4ni4g35euvg0hf4qn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

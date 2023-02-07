@@ -29,6 +29,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.project.lrnshub.models.Users;
+import com.project.lrnshub.preference.UserPreference;
 import com.project.lrnshub.ui.aboutus.AboutUs;
 import com.project.lrnshub.ui.auth.Login;
 import com.project.lrnshub.MainActivity;
@@ -61,8 +63,9 @@ public class AccountFragment extends Fragment {
 
         binding.logoutButton.setOnClickListener(v -> {
             fAuth.signOut();
+            new UserPreference(requireContext()).clearAll();
             requireContext().startActivity(new Intent(requireContext(), Login.class));
-           requireActivity().finish();
+            requireActivity().finish();
         });
 
         binding.activitylogButton.setOnClickListener(v -> {
@@ -97,7 +100,7 @@ public class AccountFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        if(timer != null){
+        if (timer != null) {
             timer.cancel();
         }
     }

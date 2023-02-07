@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.project.lrnshub">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <queries>
         <package android:name="com.merriamwebster" />
-        <package android:name="com.google.android.apps.docs.editors.docs"/>
+        <package android:name="com.google.android.apps.docs.editors.docs" />
         <package android:name="com.google.android.apps.docs.editors.sheets" />
         <package android:name="com.evernote" />
         <package android:name="com.google.android.apps.classroom" />
         <package android:name="com.microblink.photomath" />
         <package android:name="cn.wps.moffice_eng" />
         <package android:name="com.google.android.apps.docs" />
-        <package android:name="co.brainly"  />
+        <package android:name="co.brainly" />
         <package android:name="com.instructure.candroid" />
         <package android:name="com.classcraft.android" />
         <package android:name="com.classdojo.android" />
-        <package android:name= "com.dropbox.android"/>
-        <package android:name=  "com.duolingo"/>
-        <package android:name= "com.edpuzzle.student"/>
+        <package android:name="com.dropbox.android" />
+        <package android:name="com.duolingo" />
+        <package android:name="com.edpuzzle.student" />
         <package android:name="com.facebook.katana" />
-        <package android:name= "com.moymer.falou"/>
-        <package android:name= "com.google.android.apps.dynamite"/>
-        <package android:name=  "no.mobitroll.kahoot.android"/>
-        <package android:name= "com.breboucas.coreanoparaviaja"/>
-        <package android:name= "com.deer.cc"/>
-        <package android:name= "com.wjthinkbig.mathpid"/>
-        <package android:name= "com.monsterschool.colorcal" />
-        <package android:name=  "com.facebook.orca"/>
-        <package android:name= "com.brainbow.peak.app"/>
+        <package android:name="com.moymer.falou" />
+        <package android:name="com.google.android.apps.dynamite" />
+        <package android:name="no.mobitroll.kahoot.android" />
+        <package android:name="com.breboucas.coreanoparaviaja" />
+        <package android:name="com.deer.cc" />
+        <package android:name="com.wjthinkbig.mathpid" />
+        <package android:name="com.monsterschool.colorcal" />
+        <package android:name="com.facebook.orca" />
+        <package android:name="com.brainbow.peak.app" />
         <package android:name="com.plickers.client.android" />
-        <package android:name= "com.prodigygame.prodigy"/>
+        <package android:name="com.prodigygame.prodigy" />
         <package android:name="com.zzish.quizalizescan" />
-        <package android:name= "com.quizizz_mobile"/>
-        <package android:name=  "com.quizlet.quizletandroid"/>
+        <package android:name="com.quizizz_mobile" />
+        <package android:name="com.quizlet.quizletandroid" />
         <package android:name="seesaw.shadowpuppet.co.classroom" />
-        <package android:name= "com.trello"/>
-        <package android:name=  "com.imback.yeetalk"/>
+        <package android:name="com.trello" />
+        <package android:name="com.imback.yeetalk" />
     </queries>
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -63,20 +63,26 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".ui.auth.Signup"/>
-        <activity android:name=".Landing"/>
-        <activity android:name=".ui.auth.Login"/>
-        <activity android:name=".ui.alarm.Alarm"/>
-        <activity android:name=".ui.newnote.NewNote"/>
-        <activity android:name=".ui.auth.ChooseRegister"/>
-        <activity android:name=".ui.activitylog.ActivityLog"/>
-        <activity android:name=".ui.aboutus.AboutUs"/>
-        <receiver android:name=".ui.alarm.NotificationPublisher"
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.auth.Signup" />
+        <activity android:name=".Landing" />
+        <activity android:name=".ui.auth.Login" />
+        <activity android:name=".ui.alarm.Alarm" />
+        <activity android:name=".ui.newnote.NewNote" />
+        <activity android:name=".ui.auth.ChooseRegister" />
+        <activity android:name=".ui.activitylog.ActivityLog" />
+        <activity android:name=".ui.aboutus.AboutUs" />
+        <activity
+            android:name=".AdminActivity"
+            android:screenOrientation="portrait" />
+
+        <receiver
+            android:name=".ui.alarm.NotificationPublisher"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.example.MY_BROADCAST_ACTION" />
