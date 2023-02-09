@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -117,7 +118,9 @@ public class Login extends AppCompatActivity {
                         @SuppressLint("CheckResult")
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Log.e("IDSS", documentSnapshot.getId());
                             Users users = new Users();
+                            users.setDocID(documentSnapshot.getId());
                             users.setEmail(email);
                             users.setPassword(password);
                             users.setUserType(2);

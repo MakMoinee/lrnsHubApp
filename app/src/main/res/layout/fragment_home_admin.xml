@@ -8,29 +8,47 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutSearch"
+        <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search"
-            android:textColorHint="@android:color/black">
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editSearch"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutSearch"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLines="1"
-                android:minLines="1"
-                android:textColor="@android:color/black" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="0.7"
+                android:hint="Type Search Values"
+                android:textColorHint="@android:color/black">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:textColor="@android:color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="0.3"
+                android:padding="10dp"
+                android:text="Enter" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layoutSearch"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linear"
             android:layout_marginTop="20dp"
             android:scrollbars="vertical|horizontal" />
     </RelativeLayout>

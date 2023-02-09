@@ -25,6 +25,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.project.lrnshub.databinding.ActivityMainBinding;
+import com.project.lrnshub.models.Users;
+import com.project.lrnshub.preference.UserPreference;
+import com.project.lrnshub.ui.auth.Login;
 
 public class MainActivity extends AppCompatActivity implements FragmentToActivity {
 
@@ -57,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements FragmentToActivit
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+
+
     }
 
     public static PermissionStatus getUsageStatsPermissionsStatus(Context context) {

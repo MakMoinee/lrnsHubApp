@@ -1,18 +1,16 @@
 package com.project.lrnshub.ui.home;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.transition.Fade;
-import android.transition.Transition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +22,21 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.project.lrnshub.FragmentToActivity;
 import com.project.lrnshub.R;
 import com.project.lrnshub.databinding.FragmentHomeBinding;
+import com.project.lrnshub.interfaces.SimpleListener;
+import com.project.lrnshub.models.LocalApps;
+import com.project.lrnshub.models.Users;
+import com.project.lrnshub.preference.UserPreference;
+import com.project.lrnshub.service.LocalFirestore;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
@@ -42,9 +46,12 @@ public class HomeFragment extends Fragment {
     AppAdapter appAdapter1, appAdapter2;
     List<App> appList;
     List<App> installedApps;
+    List<App> installedAllApps;
     List<App> notInstalledApps;
     private FragmentToActivity mCallback;
     Boolean isFocusMode = false, onClickApp = false;
+
+    LocalFirestore fs;
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,11 +62,12 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;
-
+        fs = new LocalFirestore(requireContext());
         initializeList();
-        sortList();
+
         installedApps.sort(Comparator.comparing(App::getTitle));
         notInstalledApps.sort(Comparator.comparing(App::getTitle));
+
         appAdapter1 = new AppAdapter(requireContext(), installedApps);
         appAdapter2 = new AppAdapter(requireContext(), notInstalledApps);
 
@@ -108,6 +116,28 @@ public class HomeFragment extends Fragment {
                 filter(s.toString().toLowerCase());
             }
         });
+        addInstalledApps();
+
+        Users currentUser = new UserPreference(requireContext()).getUser();
+        LocalApps localApps = new LocalApps();
+        localApps.setUserID(currentUser.getDocID());
+        List<String> packages = new ArrayList<>();
+        for (App app : installedAllApps) {
+            packages.add(app.getPackageN());
+        }
+        localApps.setRawApp(new Gson().toJson(installedAllApps));
+        localApps.setPackages(packages);
+        fs.storeLocalApps(localApps, new SimpleListener() {
+            @Override
+            public void onSuccess() {
+                SimpleListener.super.onSuccess();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                SimpleListener.super.onError(e);
+            }
+        });
 
         return root;
     }
@@ -115,14 +145,69 @@ public class HomeFragment extends Fragment {
     private void sortList() {
         installedApps = new ArrayList<>();
         notInstalledApps = new ArrayList<>();
+        installedAllApps = new ArrayList<>();
         for (App item : appList) {
             if (isPackageInstalled(item.getPackageN())) {
                 installedApps.add(item);
+                installedAllApps.add(item);
             } else {
                 notInstalledApps.add(item);
             }
         }
 
+    }
+
+
+    private void addInstalledApps() {
+        List<App> tmpList = new ArrayList<>();
+        Map<String, App> myMap = new HashMap<>();
+        try {
+            PackageManager packageManager = requireContext().getPackageManager();
+            tmpList = new ArrayList<>();
+            Intent intent = new Intent(Intent.ACTION_MAIN, null);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            List<ResolveInfo> resolveInfoList = packageManager.queryIntentActivities(intent, 0);
+
+            for (ResolveInfo resolveInfo : resolveInfoList) {
+                for (App nApp : installedApps) {
+                    if (nApp.getPackageN().equals(resolveInfo.activityInfo.packageName)) {
+                        continue;
+                    }
+                    App appListMain = new App(
+                            resolveInfo.activityInfo.loadIcon(packageManager),
+                            resolveInfo.loadLabel(packageManager).toString(),
+                            resolveInfo.activityInfo.packageName);
+                    tmpList.add(appListMain);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (tmpList.size() > 0) {
+            Log.e("tmpList", new Gson().toJson(tmpList));
+            for (App app2 : installedAllApps) {
+                myMap.put(app2.getPackageN(), app2);
+            }
+            for (App app : tmpList) {
+                myMap.put(app.getPackageN(), app);
+            }
+
+            installedAllApps = new ArrayList<>();
+            for (Map.Entry<String, App> entry : myMap.entrySet()) {
+                installedAllApps.add(entry.getValue());
+            }
+
+
+        }
+
+        appAdapter1 = new AppAdapter(requireContext(), installedApps);
+        appAdapter2 = new AppAdapter(requireContext(), notInstalledApps);
+
+        binding.recyclerViewInstalled.setAdapter(appAdapter1);
+
+        binding.recyclerViewNotInstalled.setAdapter(appAdapter2);
     }
 
     private void initializeList() {
@@ -160,6 +245,7 @@ public class HomeFragment extends Fragment {
         addItem(appList, R.drawable.seesaw, "Seesaw", "seesaw.shadowpuppet.co.classroom");
         addItem(appList, R.drawable.trello, "Trello", "com.trello");
         addItem(appList, R.drawable.yeaetalk, "Yeaetalk", "com.imback.yeetalk");
+        sortList();
     }
 
 

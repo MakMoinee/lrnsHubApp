@@ -1,13 +1,7 @@
 package com.project.lrnshub.ui.account;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
-
 import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,14 +21,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.project.lrnshub.databinding.FragmentAccountBinding;
 import com.project.lrnshub.models.Users;
 import com.project.lrnshub.preference.UserPreference;
 import com.project.lrnshub.ui.aboutus.AboutUs;
-import com.project.lrnshub.ui.auth.Login;
-import com.project.lrnshub.MainActivity;
-import com.project.lrnshub.R;
 import com.project.lrnshub.ui.activitylog.ActivityLog;
-import com.project.lrnshub.databinding.FragmentAccountBinding;
+import com.project.lrnshub.util.SplashScreen;
 
 public class AccountFragment extends Fragment {
     FirebaseAuth fAuth;
@@ -63,9 +53,11 @@ public class AccountFragment extends Fragment {
 
         binding.logoutButton.setOnClickListener(v -> {
             fAuth.signOut();
-            new UserPreference(requireContext()).clearAll();
-            requireContext().startActivity(new Intent(requireContext(), Login.class));
+            new UserPreference(requireContext()).saveLogin(new Users());
+            requireContext().startActivity(new Intent(requireContext(), SplashScreen.class));
+            requireActivity().finishAffinity();
             requireActivity().finish();
+
         });
 
         binding.activitylogButton.setOnClickListener(v -> {

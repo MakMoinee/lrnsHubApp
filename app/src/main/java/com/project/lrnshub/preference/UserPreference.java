@@ -16,6 +16,7 @@ public class UserPreference {
 
     public void saveLogin(Users users) {
         SharedPreferences.Editor editor = pref.edit();
+        editor.putString("userID", users.getDocID());
         editor.putString("email", users.getEmail());
         editor.putString("password", users.getPassword());
         editor.putInt("userType", users.getUserType());
@@ -29,8 +30,10 @@ public class UserPreference {
         String password = pref.getString("password", "");
         int userType = pref.getInt("userType", 0);
         if (email != "" && password != "" && userType != 0) {
+            users.setDocID(pref.getString("userID", ""));
             users.setEmail(email);
             users.setPassword(password);
+            users.setUserType(userType);
             return users;
         } else {
             return null;

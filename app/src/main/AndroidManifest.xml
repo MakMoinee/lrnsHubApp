@@ -78,6 +78,9 @@
         <activity android:name=".ui.activitylog.ActivityLog" />
         <activity android:name=".ui.aboutus.AboutUs" />
         <activity
+            android:name=".EditUserAppsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".AdminActivity"
             android:screenOrientation="portrait" />
 
