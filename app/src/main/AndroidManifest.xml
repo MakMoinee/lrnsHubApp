@@ -79,6 +79,11 @@
         <activity android:name=".ui.aboutus.AboutUs" />
         <activity
             android:name=".EditUserAppsActivity"
+            android:parentActivityName=".AdminActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DeleteUserAppsActivity"
+            android:parentActivityName=".AdminActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AdminActivity"

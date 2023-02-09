@@ -49,33 +49,16 @@
                 android:layout_below="@+id/lblInstalled"
                 android:layout_marginTop="10dp" />
 
-            <TextView
-                android:id="@+id/lblNotInstalled"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/recyclerInstalled"
-                android:layout_marginTop="20dp"
-                android:text="NOT INSTALLED"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerNotInstalled"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/lblNotInstalled"
-                android:layout_marginTop="10dp" />
-
             <Button
-                android:id="@+id/btnPreinstall"
+                android:id="@+id/btnUninstall"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/recyclerNotInstalled"
+                android:layout_below="@+id/recyclerInstalled"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:enabled="false"
-                android:text="Pre Install"
+                android:text="Uninstall"
                 android:textSize="14sp" />
         </RelativeLayout>
     </ScrollView>

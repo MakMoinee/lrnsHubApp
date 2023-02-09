@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.lrnshub.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ItemViewHolder> {
@@ -74,7 +73,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ItemViewHolder> 
         void onItemClick(App item, View v);
     }
 
-    public void updateList(List<App> list){
+    public void updateList(List<App> list) {
         this.itemList = list;
         notifyDataSetChanged();
     }

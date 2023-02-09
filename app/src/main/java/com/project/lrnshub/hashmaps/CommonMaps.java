@@ -10,6 +10,7 @@ public class CommonMaps {
     public static Map<String, Object> convertLocalAppToMap(LocalApps apps) {
         Map<String, Object> myMap = new HashMap<>();
         myMap.put("packages", apps.getPackages());
+        myMap.put("originalPackages",apps.getOriginalPackages());
         myMap.put("rawApp", apps.getRawApp());
         myMap.put("userID", apps.getUserID());
         return myMap;

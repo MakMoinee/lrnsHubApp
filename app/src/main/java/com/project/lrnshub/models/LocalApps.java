@@ -12,5 +12,6 @@ import lombok.Data;
 public class LocalApps {
     String userID;
     List<String> packages;
+    List<String> originalPackages;
     String rawApp;
 }

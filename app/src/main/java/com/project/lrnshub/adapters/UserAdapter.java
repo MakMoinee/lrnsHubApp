@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.project.lrnshub.DeleteUserAppsActivity;
 import com.project.lrnshub.EditUserAppsActivity;
 import com.project.lrnshub.R;
 import com.project.lrnshub.models.Users;
@@ -82,30 +83,18 @@ public class UserAdapter extends BaseAdapter {
                 Users users = usersList.get(position);
                 Intent intent = new Intent(context, EditUserAppsActivity.class);
                 intent.putExtra("userID", users.getDocID());
+                intent.putExtra("name", users.getName());
                 context.startActivity(intent);
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-                DialogInterface.OnClickListener dListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i) {
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                break;
-                            case DialogInterface.BUTTON_POSITIVE:
-                                dialogInterface.dismiss();
-                                break;
-                        }
-                    }
-                };
-                mBuilder.setMessage("Are You Sure You Want To Delete User?")
-                        .setPositiveButton("No", dListener)
-                        .setNegativeButton("Yes", dListener)
-                        .setCancelable(false)
-                        .show();
+                Users users = usersList.get(position);
+                Intent intent = new Intent(context, DeleteUserAppsActivity.class);
+                intent.putExtra("userID", users.getDocID());
+                intent.putExtra("name", users.getName());
+                context.startActivity(intent);
             }
         });
     }

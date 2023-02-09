@@ -122,10 +122,17 @@ public class HomeFragment extends Fragment {
         LocalApps localApps = new LocalApps();
         localApps.setUserID(currentUser.getDocID());
         List<String> packages = new ArrayList<>();
+        List<App> tmpApp = new ArrayList<>();
+        List<String> originalPackages = new ArrayList<>();
         for (App app : installedAllApps) {
             packages.add(app.getPackageN());
+            tmpApp.add(new App(null, app.getTitle(), app.getPackageN()));
         }
-        localApps.setRawApp(new Gson().toJson(installedAllApps));
+        for (App app : installedApps) {
+            originalPackages.add(app.getPackageN());
+        }
+        localApps.setOriginalPackages(originalPackages);
+        localApps.setRawApp(new Gson().toJson(tmpApp));
         localApps.setPackages(packages);
         fs.storeLocalApps(localApps, new SimpleListener() {
             @Override
