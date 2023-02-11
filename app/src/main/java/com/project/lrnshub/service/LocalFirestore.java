@@ -102,5 +102,105 @@ public class LocalFirestore {
                 });
     }
 
+    public void getOnDeleteApps(String userID, SimpleListener listener) {
+        try {
+            db.collection("deletable")
+                    .document(userID)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
 
+                                LocalApps apps = documentSnapshot.toObject(LocalApps.class);
+                                if (apps != null) {
+                                    listener.onSuccessLocalApps(apps);
+                                } else {
+                                    listener.onError(new Exception("empty"));
+                                }
+                            } else {
+                                listener.onError(new Exception("empty"));
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            listener.onError(e);
+                        }
+                    });
+        } catch (Exception e) {
+            listener.onError(e);
+        }
+    }
+
+    public void addDeletableApp(LocalApps apps, SimpleListener listener) {
+        Map<String, Object> finalMap = CommonMaps.convertLocalAppToMap(apps);
+        db.collection("deletable")
+                .document(apps.getUserID())
+                .set(finalMap, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        listener.onSuccess();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        listener.onError(e);
+                    }
+                });
+    }
+
+    public void addInstallableApp(LocalApps apps, SimpleListener listener) {
+        Map<String, Object> finalMap = CommonMaps.convertLocalAppToMap(apps);
+        db.collection("installable")
+                .document(apps.getUserID())
+                .set(finalMap, SetOptions.merge())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        listener.onSuccess();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        listener.onError(e);
+                    }
+                });
+    }
+
+    public void getOnInstallableApps(String userID, SimpleListener listener) {
+        try {
+            db.collection("installable")
+                    .document(userID)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+
+                                LocalApps apps = documentSnapshot.toObject(LocalApps.class);
+                                if (apps != null) {
+                                    listener.onSuccessLocalApps(apps);
+                                } else {
+                                    listener.onError(new Exception("empty"));
+                                }
+                            } else {
+                                listener.onError(new Exception("empty"));
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            listener.onError(e);
+                        }
+                    });
+        } catch (Exception e) {
+            listener.onError(e);
+        }
+    }
 }

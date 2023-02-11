@@ -47,13 +47,18 @@ public class LocalAppAdapter extends RecyclerView.Adapter<LocalAppAdapter.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                App nItem = installedAppList.get(holder.getAbsoluteAdapterPosition());
                 listener.onItemClickListener(holder.getAbsoluteAdapterPosition());
                 if (isClick.containsKey(holder.getAbsoluteAdapterPosition())) {
                     holder.itemView.setBackgroundColor(Color.TRANSPARENT);
                     isClick.remove(holder.getAbsoluteAdapterPosition());
+                    listener.onItemWithSelectClickListener(nItem,false);
+                    listener.onItemWithSelectClickListener(holder.getAbsoluteAdapterPosition(),nItem,false);
                 } else {
                     holder.itemView.setBackgroundColor(Color.parseColor("#EDEDED"));
                     isClick.put(holder.getAbsoluteAdapterPosition(), true);
+                    listener.onItemWithSelectClickListener(nItem,true);
+                    listener.onItemWithSelectClickListener(holder.getAbsoluteAdapterPosition(),nItem,true);
                 }
 
                 if (isClick.size() > 0) {

@@ -21,9 +21,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.project.lrnshub.constants.Constants;
 import com.project.lrnshub.databinding.FragmentAccountBinding;
 import com.project.lrnshub.models.Users;
 import com.project.lrnshub.preference.UserPreference;
+import com.project.lrnshub.service.LocalWorkManager;
+import com.project.lrnshub.service.LocalWorkerService;
 import com.project.lrnshub.ui.aboutus.AboutUs;
 import com.project.lrnshub.ui.activitylog.ActivityLog;
 import com.project.lrnshub.util.SplashScreen;
@@ -54,6 +57,9 @@ public class AccountFragment extends Fragment {
         binding.logoutButton.setOnClickListener(v -> {
             fAuth.signOut();
             new UserPreference(requireContext()).saveLogin(new Users());
+            Constants.UserID = "";
+            LocalWorkerService.shouldStop = true;
+            LocalWorkManager.stopAllWorkers();
             requireContext().startActivity(new Intent(requireContext(), SplashScreen.class));
             requireActivity().finishAffinity();
             requireActivity().finish();

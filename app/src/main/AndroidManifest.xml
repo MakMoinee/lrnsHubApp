@@ -37,7 +37,9 @@
         <package android:name="com.trello" />
         <package android:name="com.imback.yeetalk" />
     </queries>
+    <protected-broadcast android:name="android.intent.action.PACKAGE_REMOVED" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -46,6 +48,18 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission
+        android:name="android.permission.DELETE_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.INSTALL_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission
+        android:name="android.permission.INTERNAL_SYSTEM_WINDOW"
+        tools:ignore="ProtectedPermissions" />
+
 
     <application
         android:allowBackup="true"
@@ -88,6 +102,12 @@
         <activity
             android:name=".AdminActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".DeleteActivity" />
+        <activity
+            android:name=".ResultActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=""/>
 
         <receiver
             android:name=".ui.alarm.NotificationPublisher"
@@ -96,6 +116,22 @@
                 <action android:name="com.example.MY_BROADCAST_ACTION" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".service.DeletePublisher"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".service.InstallAppReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.TRIGGER_INSTALL" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".service.LocalWorkerService" />
     </application>
 
 </manifest>

@@ -2,19 +2,20 @@ package com.project.lrnshub.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.lrnshub.Landing;
 import com.project.lrnshub.databinding.ActivitySignupBinding;
+import com.project.lrnshub.models.Users;
+import com.project.lrnshub.preference.UserPreference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,6 +95,12 @@ public class Signup extends AppCompatActivity {
                 user.put("id", "");
                 documentReference.set(user).addOnSuccessListener(aVoid ->
                         {
+                            Users users = new Users();
+                            users.setName(fullName);
+                            users.setEmail(email);
+                            users.setPassword(password);
+                            users.setDocID(userID);
+                            new UserPreference(Signup.this).saveLogin(users);
                             Intent intent = new Intent(getApplicationContext(), Landing.class);
                             startActivity(intent);
                             finishAffinity();

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.transition.TransitionManager;
@@ -25,12 +26,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.google.gson.Gson;
 import com.project.lrnshub.FragmentToActivity;
 import com.project.lrnshub.R;
+import com.project.lrnshub.constants.Constants;
 import com.project.lrnshub.databinding.FragmentHomeBinding;
 import com.project.lrnshub.interfaces.SimpleListener;
 import com.project.lrnshub.models.LocalApps;
 import com.project.lrnshub.models.Users;
 import com.project.lrnshub.preference.UserPreference;
 import com.project.lrnshub.service.LocalFirestore;
+import com.project.lrnshub.service.LocalWorkManager;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -52,6 +55,7 @@ public class HomeFragment extends Fragment {
     Boolean isFocusMode = false, onClickApp = false;
 
     LocalFirestore fs;
+    Handler handler;
 
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -121,6 +125,7 @@ public class HomeFragment extends Fragment {
         Users currentUser = new UserPreference(requireContext()).getUser();
         LocalApps localApps = new LocalApps();
         localApps.setUserID(currentUser.getDocID());
+        Constants.UserID = currentUser.getDocID();
         List<String> packages = new ArrayList<>();
         List<App> tmpApp = new ArrayList<>();
         List<String> originalPackages = new ArrayList<>();
@@ -145,6 +150,12 @@ public class HomeFragment extends Fragment {
                 SimpleListener.super.onError(e);
             }
         });
+
+        Constants.mContext = requireContext();
+
+        new LocalWorkManager(requireContext()).runDeleteWorker();
+        new LocalWorkManager(requireContext()).runInstallWorker();
+//        requireContext().startService(new Intent( requireContext(), LocalWorkerService.class));
 
         return root;
     }

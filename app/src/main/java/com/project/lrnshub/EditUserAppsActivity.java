@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -30,7 +31,7 @@ public class EditUserAppsActivity extends AppCompatActivity {
     String userID = "", name = "";
     LocalAppAdapter adapter1;
     LocalAppAdapter adapter2;
-    List<App> appList, installedApps, notInstalledApps;
+    List<App> appList, installedApps, notInstalledApps, selectedList;
     TextView txtName;
     Button btnPreInstall;
 
@@ -55,6 +56,25 @@ public class EditUserAppsActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch (i) {
                             case DialogInterface.BUTTON_NEGATIVE:
+                                LocalApps apps = new LocalApps();
+                                List<String> pkgs = new ArrayList<>();
+                                for (App tApp : selectedList) {
+                                    pkgs.add(tApp.getPackageN());
+                                }
+                                apps.setPackages(pkgs);
+                                apps.setUserID(userID);
+                                fs.addInstallableApp(apps, new SimpleListener() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Toast.makeText(EditUserAppsActivity.this, "Successfully Submit Apps to Pre Install", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onError(Exception e) {
+                                        SimpleListener.super.onError(e);
+                                    }
+                                });
                                 break;
                             case DialogInterface.BUTTON_POSITIVE:
                                 dialogInterface.dismiss();
@@ -129,8 +149,17 @@ public class EditUserAppsActivity extends AppCompatActivity {
 
         adapter2 = new LocalAppAdapter(EditUserAppsActivity.this, notInstalledApps, new AdapterListener() {
             @Override
-            public void onItemClickListener(int position) {
-                AdapterListener.super.onItemClickListener(position);
+            public void onItemWithSelectClickListener(int position, App app, boolean isSelected) {
+                if (isSelected) {
+                    selectedList.add(new App(null, app.getTitle(), app.getPackageN()));
+                } else {
+                    for (App nApp : selectedList) {
+                        if (nApp.getPackageN().equals(app.getPackageN())) {
+                            selectedList.remove(nApp);
+                        }
+                    }
+
+                }
             }
 
             @Override
@@ -155,6 +184,7 @@ public class EditUserAppsActivity extends AppCompatActivity {
 
 
     private void initViews() {
+        selectedList = new ArrayList<>();
         installedApps = new ArrayList<>();
         installedRecycler = findViewById(R.id.recyclerInstalled);
         notInstalledRecycler = findViewById(R.id.recyclerNotInstalled);
