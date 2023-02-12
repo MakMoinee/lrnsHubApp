@@ -124,8 +124,14 @@ public class HomeFragment extends Fragment {
 
         Users currentUser = new UserPreference(requireContext()).getUser();
         LocalApps localApps = new LocalApps();
-        localApps.setUserID(currentUser.getDocID());
-        Constants.UserID = currentUser.getDocID();
+        if (currentUser== null) {
+            localApps.setUserID(Constants.UserID);
+        } else {
+            localApps.setUserID(currentUser.getDocID());
+            Constants.UserID = currentUser.getDocID();
+        }
+
+
         List<String> packages = new ArrayList<>();
         List<App> tmpApp = new ArrayList<>();
         List<String> originalPackages = new ArrayList<>();

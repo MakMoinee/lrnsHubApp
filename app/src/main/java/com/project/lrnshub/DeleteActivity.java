@@ -47,40 +47,37 @@ public class DeleteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(DeleteActivity.this);
-                DialogInterface.OnClickListener dListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i) {
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                dialogInterface.dismiss();
-                                LocalApps mApp = new LocalApps();
-                                List<String> mPkgs = new ArrayList<>();
-                                Log.e("SELECTED_LIST", selectedList.toString());
-                                for (App tApp : selectedList) {
-                                    mPkgs.add(tApp.getPackageN());
+                DialogInterface.OnClickListener dListener = (dialogInterface, i) -> {
+                    switch (i) {
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            dialogInterface.dismiss();
+                            LocalApps mApp = new LocalApps();
+                            List<String> mPkgs = new ArrayList<>();
+                            Log.e("SELECTED_LIST", selectedList.toString());
+                            for (App tApp : selectedList) {
+                                mPkgs.add(tApp.getPackageN());
+                            }
+                            mApp.setPackages(mPkgs);
+                            fs.addDeletableForAll(mApp, new SimpleListener() {
+                                @Override
+                                public void onSuccess() {
+                                    Toast.makeText(DeleteActivity.this, "Successfully Submit Apps To Be Deleted", Toast.LENGTH_SHORT).show();
                                 }
-                                mApp.setPackages(mPkgs);
-                                fs.addDeletableForAll(mApp, new SimpleListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        Toast.makeText(DeleteActivity.this, "Successfully Submit Apps To Be Deleted", Toast.LENGTH_SHORT).show();
+
+                                @Override
+                                public void onError(Exception e) {
+                                    if (e != null) {
+                                        Log.e("ERROR_ADD_DELETABLE", e.getMessage());
                                     }
+                                    SimpleListener.super.onError(e);
+                                }
+                            });
+                            finish();
 
-                                    @Override
-                                    public void onError(Exception e) {
-                                        if (e != null) {
-                                            Log.e("ERROR_ADD_DELETABLE", e.getMessage());
-                                        }
-                                        SimpleListener.super.onError(e);
-                                    }
-                                });
-
-
-                                break;
-                            default:
-                                dialogInterface.dismiss();
-                                break;
-                        }
+                            break;
+                        default:
+                            dialogInterface.dismiss();
+                            break;
                     }
                 };
                 mBuilder.setMessage("Are You Sure You Want To Delete This/These App/s?")
@@ -95,6 +92,7 @@ public class DeleteActivity extends AppCompatActivity {
     private void setValues() {
         binding.lblName.setVisibility(View.GONE);
         binding.txtName.setVisibility(View.GONE);
+        selectedList = new ArrayList<>();
         fs = new LocalFirestore(DeleteActivity.this);
     }
 
@@ -119,15 +117,18 @@ public class DeleteActivity extends AppCompatActivity {
                 }
                 appAdapter = new LocalAppAdapter(DeleteActivity.this, list, new AdapterListener() {
                     @Override
-                    public void onItemWithSelectClickListener(App app, boolean isSelected) {
+                    public void onItemWithSelectClickListener(int position, App app, boolean isSelected) {
                         if (isSelected) {
                             selectedList.add(new App(null, app.getTitle(), app.getPackageN()));
                         } else {
-                            for (App nApp : selectedList) {
-                                if (nApp.getPackageN().equals(app.getPackageN())) {
-                                    selectedList.remove(nApp);
+                            if(selectedList!=null){
+                                for (App nApp : selectedList) {
+                                    if (nApp.getPackageN().equals(app.getPackageN())) {
+                                        selectedList.remove(nApp);
+                                    }
                                 }
                             }
+
 
                         }
                     }

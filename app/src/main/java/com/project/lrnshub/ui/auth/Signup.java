@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.lrnshub.Landing;
+import com.project.lrnshub.constants.Constants;
 import com.project.lrnshub.databinding.ActivitySignupBinding;
 import com.project.lrnshub.models.Users;
 import com.project.lrnshub.preference.UserPreference;
@@ -93,14 +94,16 @@ public class Signup extends AppCompatActivity {
                 user.put("email", email);
                 user.put("password", password);
                 user.put("id", "");
+                Users users = new Users();
+                users.setName(fullName);
+                users.setEmail(email);
+                users.setPassword(password);
+                users.setDocID(userID);
+
                 documentReference.set(user).addOnSuccessListener(aVoid ->
                         {
-                            Users users = new Users();
-                            users.setName(fullName);
-                            users.setEmail(email);
-                            users.setPassword(password);
-                            users.setDocID(userID);
                             new UserPreference(Signup.this).saveLogin(users);
+                            Constants.UserID = userID;
                             Intent intent = new Intent(getApplicationContext(), Landing.class);
                             startActivity(intent);
                             finishAffinity();

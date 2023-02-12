@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.project.lrnshub.databinding.ActivityLandingBinding;
+import com.project.lrnshub.util.SplashScreen;
 
 public class Landing extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class Landing extends AppCompatActivity {
 
 
         binding.loginBtn.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), SplashScreen.class));
             finishAffinity();
         }
     );
