@@ -82,6 +82,7 @@ public class DeleteUserAppsActivity extends AppCompatActivity {
                                     }
                                 });
 
+
                                 break;
                             default:
                                 dialogInterface.dismiss();

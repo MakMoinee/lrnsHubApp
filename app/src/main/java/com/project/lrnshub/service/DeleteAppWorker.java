@@ -82,6 +82,18 @@ public class DeleteAppWorker extends Worker {
                         }
 
                     });
+                }else{
+                    fs.deleteDeletableApp(userID, new SimpleListener() {
+                        @Override
+                        public void onSuccess() {
+                            SimpleListener.super.onSuccess();
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            SimpleListener.super.onError(e);
+                        }
+                    });
                 }
 
                 Result.success();

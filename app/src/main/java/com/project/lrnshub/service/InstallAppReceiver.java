@@ -14,7 +14,6 @@ import android.net.Uri;
 import androidx.core.app.NotificationCompat;
 
 import com.project.lrnshub.R;
-import com.project.lrnshub.ResultActivity;
 
 public class InstallAppReceiver extends BroadcastReceiver {
     public static final int NOTIFICATION_ID = 1;
@@ -23,10 +22,10 @@ public class InstallAppReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String channelId = "myInstallAppNotificationChannel";
-        Intent notifyIntent = new Intent(context, ResultActivity.class);
-        // Set the Activity to start in a new, empty task
+
         String pkg = intent.getStringExtra("pkg");
-        notifyIntent.putExtra("pkg", pkg);
+        Intent notifyIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + pkg));
+        // Set the Activity to start in a new, empty task
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // Create the PendingIntent
         PendingIntent notifyPendingIntent = PendingIntent.getActivity(

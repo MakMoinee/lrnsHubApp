@@ -85,6 +85,7 @@
         android:text="Activity Log" />
 
     <View
+        android:id="@+id/fView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="4dp"

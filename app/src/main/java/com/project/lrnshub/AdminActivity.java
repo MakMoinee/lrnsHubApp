@@ -1,6 +1,9 @@
 package com.project.lrnshub;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -9,10 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.project.lrnshub.service.LocalWorkManager;
-import com.project.lrnshub.ui.account.AccountFragment;
+import com.google.android.material.navigation.NavigationBarView;
+import com.project.lrnshub.ui.account.AdminAccountFragment;
 import com.project.lrnshub.ui.admin.AdminHomeFragment;
 
 public class AdminActivity extends AppCompatActivity {
@@ -21,7 +22,8 @@ public class AdminActivity extends AppCompatActivity {
     FragmentTransaction ft;
     FragmentManager fm;
 
-    BottomNavigationView btnNav;
+    NavigationBarView btnNav;
+    int navIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,9 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        btnNav.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+        btnNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.navigation_home:
                         fragment = new AdminHomeFragment(AdminActivity.this);
@@ -42,25 +44,54 @@ public class AdminActivity extends AppCompatActivity {
                         ft = fm.beginTransaction();
                         ft.replace(R.id.adminFragment, fragment, null);
                         ft.commit();
-                        break;
+                        navIndex = 0;
+
+                        return true;
                     case R.id.navigation_account:
-                        fragment = new AccountFragment();
+                        fragment = new AdminAccountFragment();
                         fm = getSupportFragmentManager();
                         ft = fm.beginTransaction();
                         ft.replace(R.id.adminFragment, fragment, null);
                         ft.commit();
-                        break;
+                        navIndex = 1;
+                        return true;
                 }
+                return false;
             }
         });
     }
 
     private void initViews() {
         btnNav = findViewById(R.id.nav_view);
+        setTitle("Admin");
         fragment = new AdminHomeFragment(AdminActivity.this);
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
         ft.replace(R.id.adminFragment, fragment, null);
         ft.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        switch (navIndex) {
+            case 0:
+                getMenuInflater().inflate(R.menu.options_nav_menu, menu);
+                return true;
+            default:
+                return super.onCreateOptionsMenu(menu);
+        }
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_delete:
+                startActivity(new Intent(AdminActivity.this, DeleteActivity.class),
+                        ActivityOptions.makeSceneTransitionAnimation(AdminActivity.this).toBundle());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
